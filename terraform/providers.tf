@@ -1,3 +1,5 @@
+variable "cf_api_token" {}
+
 terraform {
   required_version = ">= 0.12"
   required_providers {
@@ -13,8 +15,7 @@ terraform {
 }
 
 provider "cloudflare" {
-  api_token = "XFT9H5TGEwl229G4KQ8RrebowgJMeRKSnDKud7_P"
-
+  api_token = var.cf_api_token
 }
 
 variable "zone_id" {
