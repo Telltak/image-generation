@@ -19,7 +19,7 @@ module "image_generation_lambda" {
 resource "cloudflare_record" "image_generation_lambda" {
   zone_id         = var.zone_id
   name            = "image_generation"
-  value           = module.image_generation_lambda.lambda_function_url
+  value           = "${module.image_generation_lambda.lambda_function_url_id}.lambda-url.us-east-1.on.aws"
   type            = "CNAME"
   allow_overwrite = true
   proxied         = true
