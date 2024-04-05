@@ -69,4 +69,6 @@ jobs:
         with:
           auto_approve: true
           path: ./terraform
+          variables: |
+            cf_api_token: ${{ secrets.CF_API_TOKEN }}
 
