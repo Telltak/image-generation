@@ -1,0 +1,6 @@
+<div class="columns-{{ images | length }}" id="prompt_responses">
+	{% for image in images %}
+	<img src="data:image/png;base64, {{image}}" alt="{{loop.index}}"
+		class="overflow-hidden rounded-lg object-cover w-full aspect-square " />
+	{% endfor %}
+</div>

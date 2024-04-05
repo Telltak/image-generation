@@ -1,0 +1,28 @@
+<html>
+
+<head>
+	<script src="https://unpkg.com/htmx.org@1.9.11"
+		integrity="sha384-0gxUXCCR8yv9FM2b+U3FDbsKthCI66oH5IA9fHppQq9DDMHuMauqq1ZHBpJxQ0J0"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="grid grid-cols-3 justify-center">
+
+	<div class="col-span-3">
+		<div class="flex col-span-3 justify-center">
+			<form hx-post="/generate" hx-target="#prompt_responses" hx-swap="outerHTML">
+				<label class="font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm"
+					for="prompt">
+					Enter your prompt:
+				</label><input class="shadow-inner bg-slate-300" name="prompt" type="text">
+				<button>Submit</button>
+			</form>
+		</div>
+		<div class="columns-3" id="prompt_responses">
+		</div>
+	</div>
+	</div>
+</body>
+
+</html>
