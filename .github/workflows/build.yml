@@ -1,0 +1,61 @@
+name: Build and update lambda
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+      - uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+
+      - name: cache deps
+        id: cache-deps
+        uses: actions/cache@v2
+        with:
+          path: .venv
+          key: pydeps-${{ hashFiles('**/poetry.lock') }}
+
+      # Only run dependency installation if not cached
+      - run: poetry install --no-interaction --no-root
+        if: steps.cache-deps.outputs.cache-hit != 'true'
+
+      - run: poetry install --no-interaction
+
+      - run: poetry build
+
+      - run: poetry run pip install --upgrade -t package dist/*.whl
+
+      - run: zip -r ../artifact.zip . -x '*.pyc'
+        working-directory: ./src/package
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: artifact-zip
+          path: artifact.zip
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./terraform
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: artifact-zip
+      - uses: aws-actions/configure-aws-credentials@v4
+          with:
+            aws-region: us-east-1
+
+      - uses: dflook/terraform-apply@v1.42.0
+        with:
+          auto_approve: true
