@@ -14,7 +14,7 @@ module "image_generation_lambda" {
   cors = {
     # TODO: Use variables/locals
     allow_origins = ["*"]
-    allow_method  = ["GET", "POST"]
+    allow_methods = ["GET", "POST"]
   }
 
   attach_policy = true
