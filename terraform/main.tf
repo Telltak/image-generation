@@ -11,6 +11,10 @@ module "image_generation_lambda" {
   local_existing_package = "../artifact.zip"
 
   create_lambda_function_url = true
+  cors = {
+    # TODO: Use variables/locals
+    allow_origins = ["image_generation.telltak.space"]
+  }
 
   attach_policy = true
   policy        = "arn:aws:iam::aws:policy/AmazonBedrockFullAccess"
