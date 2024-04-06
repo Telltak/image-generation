@@ -10,6 +10,8 @@ module "image_generation_lambda" {
   create_package         = false
   local_existing_package = "../artifact.zip"
 
+  timeout = 900
+
   create_lambda_function_url = true
   cors = {
     # TODO: Use variables/locals
