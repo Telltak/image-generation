@@ -13,7 +13,7 @@ resource "aws_lambda_permission" "image_generation_lambda" {
 }
 
 resource "aws_apigatewayv2_domain_name" "image_generation_lambda" {
-  domain_name = "image_generation.telltak.space"
+  domain_name = "image-generation.telltak.space"
   domain_name_configuration {
     certificate_arn = "arn:aws:acm:eu-west-1:792211320931:certificate/c0260739-4f45-43c6-a565-2b217bf0fcd6"
     endpoint_type   = "REGIONAL"

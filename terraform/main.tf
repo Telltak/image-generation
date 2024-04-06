@@ -18,7 +18,7 @@ data "aws_region" "current" {}
 
 resource "cloudflare_record" "image_generation_lambda" {
   zone_id         = var.zone_id
-  name            = "image_generation"
+  name            = "image-generation"
   value           = "${aws_apigatewayv2_api.image_generation_lambda.id}.execute-api.${data.aws_region.current.name}.amazonaws.com"
   type            = "CNAME"
   allow_overwrite = true
