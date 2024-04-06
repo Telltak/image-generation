@@ -12,6 +12,15 @@ terraform {
       version = ">=4.0"
     }
   }
+
+  backend "s3" {
+    bucket = "telltak-terraform-state"
+    key    = "image_generation/terraform.tfstate"
+    region = "eu-west-1"
+
+    dynamodb_table = "terraform-locks"
+    encrypt        = true
+  }
 }
 
 provider "cloudflare" {
