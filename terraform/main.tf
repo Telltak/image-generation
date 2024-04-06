@@ -10,21 +10,16 @@ module "image_generation_lambda" {
   create_package         = false
   local_existing_package = "../artifact.zip"
 
-  create_lambda_function_url = true
-  cors = {
-    # TODO: Use variables/locals
-    allow_origins = ["*"]
-    allow_methods = ["GET", "POST"]
-  }
-
   attach_policy = true
   policy        = "arn:aws:iam::aws:policy/AmazonBedrockFullAccess"
 }
 
+data "aws_region" "current" {}
+
 resource "cloudflare_record" "image_generation_lambda" {
   zone_id         = var.zone_id
   name            = "image_generation"
-  value           = "${module.image_generation_lambda.lambda_function_url_id}.lambda-url.us-east-1.on.aws"
+  value           = "${aws_apigatewayv2_api.image_generation_lambda.id}.execute-api.${data.aws_region.current.name}.amazonaws.com"
   type            = "CNAME"
   allow_overwrite = true
   proxied         = true
