@@ -40,7 +40,7 @@ jobs:
       - run: zip -r ../artifact.zip . -x '*.pyc'
         working-directory: ./src/package
 
-      - run: zip -r ../artifact.zip templates
+      - run: zip -r artifact.zip templates
         working-directory: ./src
 
       - run: ls
