@@ -13,7 +13,8 @@ module "image_generation_lambda" {
   create_lambda_function_url = true
   cors = {
     # TODO: Use variables/locals
-    allow_origins = ["https://image_generation.telltak.space", "https://image_generation.telltak.space/*"]
+    allow_origins = ["*"]
+    allow_method  = ["GET", "POST"]
   }
 
   attach_policy = true
