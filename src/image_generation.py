@@ -12,9 +12,8 @@ app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
 origins = [
-    "image_generation.telltak.space",
-    "image-generation.telltak.space",
-    "*"
+    "https://image_generation.telltak.space",
+    "https://image-generation.telltak.space",
 ]
 
 app.add_middleware(CORSMiddleware, allow_origins=origins,
