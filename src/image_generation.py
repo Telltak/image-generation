@@ -12,7 +12,6 @@ app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
 origins = [
-    "https://image_generation.telltak.space",
     "https://image-generation.telltak.space",
 ]
 
