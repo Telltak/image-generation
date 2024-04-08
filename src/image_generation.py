@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Form, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
+from fastapi.middleware.cors import CORSMiddleware
 import boto3
 import json
 from typing import Annotated
@@ -9,6 +10,15 @@ from mangum import Mangum
 bedrock_client = boto3.client(service_name="bedrock-runtime")
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
+
+origins = [
+    "image_generation.telltak.space",
+    "image-generation.telltak.space",
+    "*"
+]
+
+app.add_middleware(CORSMiddleware, allow_origins=origins,
+                   allow_methods=["*"], allow_headers=["*"])
 
 
 # TODO: Consider how to do form inputs with full model and nonetypes
@@ -66,7 +76,7 @@ async def generate_images(request: Request, prompt: Annotated[str, Form()]):
         raise RuntimeError(f"Failed to generate images with error {
                            body.get('error')}")
 
-    return templates.TemplateResponse(request=request, name="images.html", context={"images": body.get("images")}, headers={"Access-Control-Allow-Origin": "*"})
+    return templates.TemplateResponse(request=request, name="images.html", context={"images": body.get("images")}, )
 
 
 @ app.get("/", response_class=HTMLResponse)
