@@ -12,11 +12,11 @@ app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
 origins = [
-    "https://image-generation.telltak.space",
+    "*",
 ]
 
-app.add_middleware(CORSMiddleware, allow_origins=origins,
-                   allow_methods=["*"], allow_headers=["*"])
+# app.add_middleware(CORSMiddleware, allow_origins=origins,
+#                    allow_methods=["*"], allow_headers=["*"])
 
 
 # TODO: Consider how to do form inputs with full model and nonetypes
