@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Form, Request, Response
+from fastapi import FastAPI, Form, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 import boto3
@@ -38,7 +38,7 @@ templates = Jinja2Templates(directory="templates")
 
 
 @app.post("/generate", response_class=HTMLResponse)
-async def generate_images(request: Request, prompt: Annotated[str, Form()], response: Response):
+async def generate_images(request: Request, prompt: Annotated[str, Form()]):
     prompt = {
         "textToImageParams": {"text": prompt},
         "taskType": "TEXT_IMAGE",
@@ -66,8 +66,7 @@ async def generate_images(request: Request, prompt: Annotated[str, Form()], resp
         raise RuntimeError(f"Failed to generate images with error {
                            body.get('error')}")
 
-    response.headers["Access-Control-Allow-Origin"] = "*"
-    return templates.TemplateResponse(request=request, name="images.html", context={"images": body.get("images")})
+    return templates.TemplateResponse(request=request, name="images.html", context={"images": body.get("images")}, headers={"Access-Control-Allow-Origin": "*"})
 
 
 @ app.get("/", response_class=HTMLResponse)
